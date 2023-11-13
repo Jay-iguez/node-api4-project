@@ -1,4 +1,6 @@
-let id = 0
+require('dotenv').config()
+
+let id = process.env.BASELINEID
 
 const getId = () => {
     return id++
@@ -6,17 +8,17 @@ const getId = () => {
 
 let users = [
     {
-        name: "Reede Buscuits",
+        username: "Reede Buscuits",
         password: 'donutwater',
         id: getId()
     },
     {
-        name: "Lola Lobezaléz",
+        username: "Lola Lobezaléz",
         password: 'getthehorns',
         id: getId()
     },
     {
-        name: "Kade Booker",
+        username: "Kade Booker",
         password: 'holdb',
         id: getId()
     }
@@ -32,6 +34,12 @@ module.exports = {
 
         users = [...users, newUser]
         
-        return users
+        return newUser
+    },
+    async fetchUserById(id) {
+        return users.find(user => user.id === id)
+    },
+    async checkCredentials(userInput) {
+        return users.find(user => user.username === userInput.username && user.password === userInput.password)
     }
 }
